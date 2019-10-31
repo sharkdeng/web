@@ -1,0 +1,107 @@
+\section{Mysql}
+    
+    \subsection{Commands}
+    \begin{enumerate}
+        \item \colorbox{gray!30}{mysql --version}
+        \item \colorbox{gray!30}{mysql -u root -p}
+        \item Database
+            \begin{enumerate}
+                \item \colorbox{gray!30}{show databases;}
+                \item \colorbox{gray!30}{create database <dbName>;}
+                \item \colorbox{gray!30}{drop database <dbName>;}
+                \item \colorbox{gray!30}{use <dbName>;}
+            \end{enumerate}
+        \item Table
+            \begin{enumerate}
+                \item \colorbox{gray!30}{show tables;}
+                \item \colorbox{gray!30}{desc <tableName>;}
+                \item \colorbox{gray!30}{drop table <tableName>;}
+                \item \colorbox{gray!30}{alter table}
+            \end{enumerate}
+        \item Schema
+            \begin{enumerate}
+                \item \colorbox{gray!30}{create schema <name>'}
+                \item \colorbox{gray!30}{show schemas;}
+            \end{enumerate}
+        \item \colorbox{gray!30}{quit;}
+    \end{enumerate}
+    
+    \subsection{Engine}
+    
+    \subsection{Data Type}
+    \begin{description}
+        \item[Numeric]{
+        	\begin{description}
+        	\item
+        	\item[TINYINT] 1 byte / Integer(-128 to 127, 0 to 255)
+        	\item[SMALLINT] 2 bytes
+        	\item[MEDIUMINT] 3 bytes
+        	\item[INT] 4 bytes
+        	\item[BIGINT] 8 bytes
+        	\item[DECIMAL] fixed-point (M,X) / maximum(65, 30) / default(10, 0)
+        	\item[FLOAT] floating-point
+        	\item[DOUBLE] double-precision floating-point
+        	\item[REAL]
+        	\item[BIT]
+        	\item[BOOLEAN]
+        	\item[SERIAL]
+        	\end{description}
+        }
+        \item[Date and time]{
+        	\begin{description}
+        	\item
+        	\item[DATE] 3 bytes / YYYY-MM-DD
+        	\item[TIME] 3 bytes / HH:MM:SS
+        	\item[YEAR] 1 byte / YYYY
+        	\item[DATETIME] 8 bytes / YYYY-MM-DD HH:MM:SS
+        	\item[TIMESTAMP] 4 bytes / YYYYMMDD HHMMSS
+        	\end{description}
+        }
+        \item[String]{
+        	\begin{description}
+        	\item
+        	\item[CHAR]
+        	\item[VARCHAR]
+        	\item[TINYTEXT]
+        	\item[TEXT]
+        	\item[MEDIUMTEXT]
+        	\item[LONGTEXT]
+        	\item[BINAR]
+        	\item[VARBINARY]
+        	\item[TINYBLOB]
+        	\item[MEDIUMBLOB]
+        	\item[BLOB]
+        	\item[LONGBLOB]
+        	\item[ENUM]
+        	\item[SET]
+        	\end{description}
+        }
+        \item[Spatial]{
+        	\begin{description}
+        	\item[GEOMETRY]
+        	\item[POINT]
+        	\item[LINESTRING]
+        	\item[POLYGON]
+        	\item[MULTIPOINT]
+        	\item[MULTILINESTRING]
+        	\item[MULTIPOLYGON]
+        	\item[GEOMETRYCOLLECTION]
+        	\end{description}
+        }
+        \item[JSON]
+    \end{description}
+
+    \subsection{Engine}
+    \begin{enumerate}
+        \item Innodb
+    \end{enumerate}
+    
+    \subsection{Problem Shoot}
+    \begin{enumerate}
+        \item 
+    \end{enumerate}
+    
+    
+    
+    \subsection{Questions}
+    

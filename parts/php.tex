@@ -1,0 +1,149 @@
+\newpage
+\section{PHP}
+    \subsection{Installation}
+        \subsubsection{Mac built-in}
+        \begin{enumerate}[(1)]
+            \item \colorbox{gray!30}{php -v} check php is installed.
+            \item php-fpm
+                \begin{enumerate}[(a)]
+                    \item copy the three files \colorbox{gray!30}{/private/etc/php.ini}, \colorbox{gray!30}{/private/etc/php-fpm.conf}, \\ \colorbox{gray!30}{/private/etc/php-fpm.d/www.conf}
+                    \item modify php-fpm.ini
+                    \begin{lstlisting}
+error_log = /usr/local/var/log/php-fpm.log
+                    \end{lstlisting}
+                    \item \colorbox{gray!30}{php-fpm} should work
+                    \item if the ports are taken, try \colorbox{gray!30}{lsof -i:9000}, then \colorbox{gray!30}{kill -9 <pid>}
+                \end{enumerate}
+            \item nginx 
+                \begin{enumerate}[(a)]
+                    \item modify \colorbox{gray!30}{/usr/local/etc/nginx/nginx.conf}
+                    \begin{lstlisting}
+location / {
+  root html;  # [shark] here to change doc root
+  index  index.html index.htm index.php; # [shark] add index.php to support php, or error "forbidden" will show 
+}
+    ...
+# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
+# [shark] open this block
+location ~ \.php$ {
+  root           html; # [shark] php file root, or error "file not found" will show
+  fastcgi_pass   127.0.0.1:9000; # [shark] php-fpm server location
+  fastcgi_index  index.php;
+  fastcgi_param   %document_root%fastcgi_script_name; # [shark] or error "file not found" will show
+  include        fastcgi_params;
+}
+                    \end{lstlisting}
+                \end{enumerate}
+        \end{enumerate}
+        
+        \subsubsection{Brew}
+        
+        
+    \subsection{File Paths}
+        \begin{enumerate}
+            \item php-fpm: \colorbox{gray!30}{/private/etc/php-fpm.conf}
+            \item Built-in
+                \begin{enumerate}
+                    \item command path: \colorbox{gray!30}{/usr/bin}
+                    
+                    \item extension: \colorbox{gray!30}{/usr/lib/php}
+                    \item config: \colorbox{gray!30}{/private/etc/php.ini}
+                    \item \colorbox{gray!30}{/usr/local/bin/php (which php)}
+                    \item \colorbox{gray!30}{/usr/local/etc/php}
+                    \item \colorbox{gray!30}{/usr/local/lib/php}
+                \end{enumerate}
+            \item Brew
+                \begin{enumerate}
+                    \item \colorbox{gray!30}{/usr/local/Cellar/php@7.2}
+                \end{enumerate}
+            \item Port
+                \begin{enumerate}[(1)]
+                    \item \colorbox{gray!30}{/opt/local/lib/php71/}
+                \end{enumerate}
+        \end{enumerate}
+        
+        
+    \subsection{Commands}
+        \begin{enumerate}
+            \item look version: \colorbox{gray!30}{php -v}
+            \item look modules: \colorbox{gray!30}{php -m}
+            \item start php-fpm: \colorbox{gray!30}{php-fpm}
+        \end{enumerate}
+        
+    
+    \subsection{Config}
+        \subsubsection{Modify PHP file upload limit}
+            \begin{enumerate}
+                \item use \colorbox{gray!30}{phpinfo()} in webdoc to find php.ini
+                \item modify php.ini
+\begin{lstlisting}
+upload_max_filesize = 2M
+max_file_uploads = 20            
+\end{lstlisting}
+                \item restart server 
+                    \begin{enumerate}
+                        \item apache: \colorbox{gray!30}{sudo apachectl restart}
+                        \item nginx: \colorbox{gray!30}{nginx -s stop; nginx}
+                    \end{enumerate}
+                \item for nginx, need to restart php-fpm also
+                    \begin{enumerate}
+                        \item use ActivityMonitor find php-fpm pid
+                        \item stop php-fpm \colorbox{gray!30}{kill [pid]}
+                        \item start \colorbox{gray!30}{php-fpm}
+                    \end{enumerate}
+            \end{enumerate}
+            
+        \subsubsection{Support Mysql}
+        
+        
+    \subsection{Extension(Pear/Pecl)}
+        \begin{enumerate}
+            \item install \colorbox{gray!30}{pear} or \colorbox{gray!30}{pecl} 
+                \begin{lstlisting}
+curl -O https://pear.php.net/go-pear.phar
+sudo php -d detect_unicode=0 go-pear.phar
+# change installation root directory to /usr/local/pear
+                \end{lstlisting}
+            \item verify installation
+                \begin{lstlisting}
+pear version
+                \end{lstlisting}
+            \item install enxtension
+                \begin{lstlisting}
+sudo pecl install intl
+                \end{lstlisting}
+            \item problem 1:
+                \begin{lstlisting}
+grep: /usr/include/php/main/php.h: No such file or directory
+grep: /usr/include/php/Zend/zend_modules.h: No such file or directory
+grep: /usr/include/php/Zend/zend_extensions.h: No such file or directory
+Configuring for:
+PHP Api Version:
+Zend Module Api No:
+Zend Extension Api No:
+                \end{lstlisting}
+                solutions
+                \begin{lstlisting}
+cd /Library/Developer/CommandLineTools/Packages/
+open macOS_SDK_headers_for_macOS_10.14.pkg
+                \end{lstlisting}
+            \item problem 2:
+                \begin{lstlisting}
+PHP Api Version:         20160303
+Zend Module Api No:      20160303
+Zend Extension Api No:   320160303
+Cannot find autoconf. Please check your autoconf installation and the
+$PHP_AUTOCONF environment variable. Then, rerun this script.
+
+ERROR: `phpize' failed
+                \end{lstlisting}
+                solution:
+                \begin{lstlisting}
+brew install autoconf
+                \end{lstlisting}
+            
+            \item problem 3:
+            make problem
+        \end{enumerate}
+        
+    \subsection{Extension(Port)}

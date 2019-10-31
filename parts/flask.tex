@@ -1,0 +1,24 @@
+\newpage
+\section{Flask}
+First, we need to install \textbf{Python} and \textbf{Flask}. \par
+\begin{lstlisting}
+conda install flask 
+conda install flask-wtf 
+conda install flask-script 
+\end{lstlisting}
+Secondly, we build file structures. \par
+\begin{lstlisting}
+root
+--app
+----static
+----templates
+--root.py
+--v.flaskenv
+\end{lstlisting}
+Thirdly, to get an idea of flask language. \par 
+\begin{enumerate}[(1)]
+    \item \textbf{Variable:} \{\{ x \}\}
+    \item \textbf{Loop:} \{\% for x in xs \%\} $\Longrightarrow$ \{\% endfor \%\}
+    \item \textbf{If:} \{\% if x \%\} $\Longrightarrow$ \{\% else \%\} $\Longrightarrow$ \{\% endif \%\}
+    \item \textbf{Block:} \{\% block content \%\} $\Longrightarrow$\{\% endblock \%\}
+\end{enumerate}

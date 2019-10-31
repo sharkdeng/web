@@ -1,0 +1,145 @@
+\documentclass[12pt, a4paper]{report}
+\usepackage[top=2cm, left=2cm, right=2cm, bottom=2cm]{geometry}
+\usepackage{fontspec} % require LuaLatex engine
+\setmainfont{Times New Roman}
+\usepackage{enumerate}
+\usepackage{float}
+% code
+\usepackage{listings} % insert code
+\usepackage{xcolor}	 % code color
+\definecolor{codegreen}{rgb}{0, 0.6, 0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstset{
+backgroundcolor=\color{backcolour}, 
+commentstyle=\color{codegreen},
+keywordstyle=\color{magnenta},
+numbers=left, %行号在左侧显示
+numberstyle= \small\color{codegray},%行号字体
+numbersep=5pt,
+rulesepcolor= \color{gray!80}, %代码块边框颜色
+breaklines=true,  %代码过长则换行
+keywordstyle= \color{blue},%关键字颜色
+frame=shadowbox,	%用方框框住代码块
+showspaces=false,
+showstringspaces=false,
+showtabs=false,
+tabsize=1
+}
+\usepackage{hyperref}
+
+
+
+
+
+\title{\textbf{Website Build Handbook}}
+\author{Limin Deng}
+\date{May 2019}
+
+\begin{document}
+\maketitle
+
+\tableofcontents{}
+\clearpage
+
+
+\section{Installation}
+\begin{enumerate}
+    \item \textbf{Mysql}: 
+        \begin{enumerate}
+            \item download mysql community version and install. It will have an icon in \textbf{System Preferences}
+            \item add environment path: \colorbox{gray!30}{export PATH="/usr/local/mysql/bin:\$PATH"} in ~/.bash\_profile
+        \end{enumerate}
+    \item \textbf{Nodejs}: download from official website
+    \item \textbf{Phpmyadmin}: 
+        \begin{enumerate}
+            \item download \underline{\href{https://www.phpmyadmin.net}{Phpmyadmin}}
+            \item put the folder in nginx doc root (if php config above is correct, phpmyadmin page will show)
+            \item link to mysql
+                \begin{enumerate}
+                    \item find mysql.socket: \colorbox{gray!30}{mysql\_config \-\-socket} or \colorbox{gray!30}{mysql -u root -p }, after entering, \colorbox{gray!30}{mysql>> status}
+                    \item modify \colorbox{gray!30}{/private/etc/php.ini}
+                    \begin{lstlisting}
+pdo_mysql.default_socket = /tmp/mysql.sock
+mysqli.default_socket = /tmp/mysql.sock
+                    \end{lstlisting}
+                    \item restart php-fpm
+                    
+                    \item copy \colorbox{gray!30}{phpmyadmin/ config.sample.ini.php} to \colorbox{gray!30}{config.ini.php}
+                    
+                    \item modify \colorbox{gray!30}{phpmyadmin/libraries/config.default.php}
+                    \begin{lstlisting}
+$cfg['Servers'][$i]['user'] = 'root';
+$cfg['Servers'][$i]['password'] = 'your password';
+                    \end{lstlisting}
+                \end{enumerate}
+        \end{enumerate}
+    \item \textbf{Boot}: After setting up the above steps, whenever restart computer, you have to type \colorbox{gray!30}{nginx}(start server) and \colorbox{gray!30}{php-fpm}(start php support). \\
+    One method is to set boot 
+        \begin{enumerate}
+            \item create a run.sh in ~/
+            \item modify file access authority: \colorbox{gray!30}{sudo chmod 777 run.sh}
+            \item modify the file is open with terminal (Get Info)
+            \item System Preferences/Users\&Groups/Login Items/add the file and click \underline{hide}.
+        \end{enumerate}
+        
+    \item \textbf{Apache}: Mac built-in
+
+    
+\end{enumerate}
+
+
+\section{Languages}
+\begin{enumerate}
+    \item Frontend: 
+    \href{}{\textcolor{blue}{HTML}}, \href{}{\textcolor{blue}{CSS}}, \href{}{\textcolor{blue}{Javascript}}
+    
+    \item Backend: 
+    \href{}{\textcolor{blue}{Php}}, \href{https://www.kaggle.com/muerbingsha/n-python}{\textcolor{blue}{Python}}
+\end{enumerate}
+
+
+\section{Resources}
+    \begin{enumerate}
+        \item \textbf{Wordpress}: content management system
+            \begin{enumerate}
+                \item download the package and put it in doc root
+                \item if there is \underline{wp\_config.php}, delete it and start installation(config database).
+            \end{enumerate}
+        \item \textbf{Discourse}: online forum
+        \item \textbf{Moodle}: learning management system 
+        \item \textbf{Disqus}: Comment System
+    \end{enumerate}
+
+
+
+\chapter{Server}
+\input{parts/apache.tex}
+\input{parts/nginx.tex}
+\input{parts/nodejs.tex}
+\input{parts/flask.tex}
+
+
+\chapter{Database}
+\input{parts/mysql.tex}
+\input{parts/postsql.tex}
+
+
+\chapter{Language}
+\input{parts/html.tex}
+\input{parts/css.tex}
+\input{parts/javascript.tex}
+\input{parts/php.tex}
+
+\chapter{Others}
+\input{parts/selenium.tex}
+\input{parts/seo.tex}
+\input{parts/ui.tex}
+
+\chapter{Frameworks}
+\input{parts/wordpress.tex}
+\input{parts/moodle.tex}
+
+
+\end{document}
