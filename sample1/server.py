@@ -10,7 +10,14 @@ import os
 import logging
 import base64 
 from tornado.options import define, options
-define('port', default=3400, help='run port', type=int)
+#define('port', default=3400, help='run port', type=int)
+'''
+define("mysql_host", default="127.0.0.1:3306", help="blog database host")
+define("mysql_database", default="forum", help="database name")
+define("mysql_user", default="root", help="database user")
+define("mysql_password", default="passwd", help="database password")
+'''
+
 
 settings = {
     'static_path': os.path.join(os.path.dirname('__file__')),
@@ -30,18 +37,25 @@ def base64_img():
     src_path = os.path.abspath(os.path.dirname('__file__'))
     src_path = src_path.split('/')
     src_path.pop()
-    src_path.append('react')
-    src_path[0] = '/'
-    src_path = os.path.join(*src_path)
+    src_path.append('sample1_react') # parent directory
+    src_path[0] = '/' 
+    src_path = os.path.join(*src_path) # list to str
     print('hello')
     print(src_path)
     imgs = os.listdir(src_path)
     for img in imgs:
         fn = os.path.join(src_path, img)
-        if os.path.isfile(fn) and os.path.splitect(fn)[1] == '.png':
+        if os.path.isfile(fn) and os.path.splitext(fn)[1] == '.jpg': # get suffix
             print('ok', fn)
             with open(fn, 'rb') as f:
                 base64_data = base64.b64encode(f.read())
                 img_base64.append(base64_data)
-    print(img_base64)
     return img_base64
+
+
+
+class Base64Handler(tornado.web.RequestHandler):
+    def get(self):
+        imgs = base64_img()
+        self.render('./base64.html', imgs=imgs)
+        
